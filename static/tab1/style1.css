@@ -1,0 +1,361 @@
+/* ========== FONTS ========== */
+@font-face {
+    font-family: 'Noto Serif Display';
+    src: url('/static/fonts/NotoSerifDisplay.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Mekaryu Display Serif';
+    src: url('/static/fonts/MekaryuDisplaySerif.ttf') format('truetype');
+}
+
+/* ========== GENERAL STYLES ========== */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif; /* Switched to Montserrat as a base, Merriweather for specific elements */
+    background-color: #f4ebdb;
+    overflow-x: hidden; /* Prevent horizontal scrollbars if content is too wide */
+    min-height: 100vh; /* Ensure body takes at least full viewport height */
+    display: flex; /* Added to help center the main content if desired */
+    flex-direction: column; /* Stack footer or other elements later */
+    align-items: center; /* Center #interactive-dashboard horizontally */
+}
+
+
+.box-container {
+  background-color: #fdf7ed; /* White background like TAB4 */
+  border-radius: 12px; /* Rounded corners */
+  border-color: #c1551a;
+  padding: 20px 30px; /* Padding around content */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow */
+  max-width: 1400px; /* Limit max width */
+  margin: 0 auto 40px auto; /* Center and bottom margin */
+}
+
+
+main#interactive-dashboard {
+  width: 100%;
+  max-width: auto; /* Overall max-width for the entire dashboard content */
+  padding: 0; /* Padding around the dashboard */
+  box-sizing: border-box;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+/* Common styling for the two main sections */
+.content-section {
+  width: 100%;
+  margin-bottom: 40px; /* Space between major selection and details section */
+}
+.content-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-title { /* General title style for sections */
+  font-family: 'Merriweather', serif;
+  font-size: 1.8em;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.centered-title { /* Utility class for centered titles */
+  text-align: center;
+}
+
+
+/* ========== MAJOR SELECTION SECTION (Top Row) ========== */
+#major-selection-section {
+  text-align: center; /* Center the word cloud if it doesn't fill width */
+  margin-bottom: 10px;
+}
+
+.word-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  max-width: 800px; /* Max width for word cloud container */
+  margin: 0 auto;   /* Center word cloud container */
+}
+
+.major-word {
+  font-family: 'Merriweather', serif;
+  color: #777;
+  background-color: #fff;
+  border: 1px solid #eee;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9em;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  margin: 5px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.major-word:hover {
+  opacity: 1;
+  color: #aa3b19;
+  border-color: #aa3b19;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.major-word.selected {
+  color: #ffffff;
+  background-color: #c1551a;
+  border-color: #c1551a;
+  font-weight: bold;
+  font-size: 1.1em;
+  opacity: 1;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 10px rgba(193, 85, 26, 0.3);
+}
+
+
+/* ========== DETAILS SECTION (Bottom Row: Chart Left, Description Right) ========== */
+#chart-container, 
+#chart-container > div, 
+.chart-column-detail {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  flex-shrink: 0 !important;
+  box-sizing: border-box !important;
+  float: none !important;
+  padding-right: 10px;
+}
+
+#details-section .details-flex-container {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  flex-direction: row !important; /* Chart and Description side-by-side */
+  justify-content: flex-start !important;
+  align-items: flex-start; /* Align to top */
+  gap: 30px !important; 
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+  margin-left: 40px !important;
+  margin-right: 20px !important;
+  max-width: 1200px; 
+  margin: 0;
+  box-sizing: border-box !important;
+}
+
+.details-column { /* Base style for columns within the details section */
+  box-sizing: border-box;
+  /* padding: 10px; /* Optional padding for columns themselves */
+}
+
+.chart-column-detail {
+  flex: 0 0 58%;
+  max-width: 58%;
+  min-width: 320px; /* Minimum width to ensure chart readability */
+  display: flex; /* Added for better control of chart-container */
+  flex-direction: column;
+  align-items: flex-start; /* Center chart-container if it's narrower */
+  margin: 0 !important;
+  display: flex;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  padding-right: 10px;
+}
+
+.description-column-detail {
+  flex: 0 0 38%; /* Description takes about 38% (allowing for gap) */
+  max-width: 38%;
+  min-width: 280px; /* Minimum width for description readability */
+  box-sizing: border-box;
+  padding-left: 10px;
+  margin-top: 0;
+  margin-left: 40px !important; /* Push description right */
+  padding-top: 0;
+}
+
+/* Chart Container (where Plotly chart is injected) */
+#chart-container {
+    flex: 1 1 400px; /* flexible with minimum width 400px */
+    max-width: 700px;
+}
+
+#chart-container svg, #chart-container canvas {
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100%;
+}
+
+#chart-area { /* The div Plotly directly uses */
+    width: 100%;
+    height: 100%;
+}
+
+/* Chart Description Area & Content Box */
+#chart-description-area {
+  margin-top: 30px; /* <<<< ADJUST THIS VALUE (e.g., 20px, 30px, 40px) */
+  width: 100%;
+  max-width: 700px; /* Max width for the description box itself */
+  /* padding: 0 10px; /* Not needed if .description-column-detail has padding */
+  box-sizing: border-box;
+}
+
+.description-content {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px 25px;
+  text-align: left;
+  font-family: 'Merriweather', serif;
+  font-size: 0.95em; /* Adjust as needed */
+  line-height: 1.65;
+  color: #444444;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  width: 100%; /* Fill the .description-column-detail */
+  box-sizing: border-box;
+  min-height: 300px; /* Give it a minimum height to look substantial */
+}
+.description-content p { margin: 0; }
+
+
+/* ========== RESPONSIVE ADJUSTMENTS ========== */
+@media (max-width: 900px) { /* Breakpoint when chart and description might stack */
+  #details-section .details-flex-container {
+    flex-wrap: wrap;
+    flex-direction: column; /* Stack chart and description */
+    align-items: center;    /* Center them when stacked */
+  }
+  .chart-column-detail,
+  .description-column-detail {
+    flex: none !important;
+    width: 100%; /* Both take full width when stacked */
+    max-width: 700px; /* Optional: max-width for better readability when stacked */
+    min-width: 0px; /* Reset min-width */
+  }
+
+  .description-column-detail {
+    margin-top: 30px; /* Add space when description is stacked under chart */
+  }
+  .section-title {
+      font-size: 1.5em; /* Adjust title size for tablets */
+  }
+}
+
+@media (max-width: 480px) { /* Smaller mobile adjustments */
+    main#interactive-dashboard {
+        padding: 15px;
+    }
+    .section-title {
+        font-size: 1.3em;
+    }
+    .word-cloud {
+        gap: 0.5rem;
+    }
+    .major-word {
+        font-size: 0.8em;
+        padding: 0.4rem 0.8rem;
+    }
+    .major-word.selected {
+        font-size: 1em;
+    }
+    .description-content {
+        font-size: 0.9em;
+        padding: 15px 20px;
+    }
+}
+
+/* ===== Min slider (start) styling ===== */
+body input[type=range]#slider-min::-webkit-slider-thumb {
+  background: #c1551a !important;
+  border-radius: 50%;
+  border: 2px solid #5a3b0a !important; /* darker border */
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  margin-top: -8px;
+  position: relative;
+  z-index: 3;
+}
+input[type=range]#slider-min::-webkit-slider-runnable-track {
+  background: #d2833d;
+  height: 8px;
+  border-radius: 4px;
+}
+input[type=range]#slider-min::-moz-range-thumb {
+  background: #c1551a !important;
+  border-radius: 50%;
+  border: 2px solid #5a3b0a !important;
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+}
+input[type=range]#slider-min::-moz-range-track {
+  background: #d2833d;
+  height: 8px;
+  border-radius: 4px;
+}
+
+/* ===== Max slider (end) styling ===== */
+body input[type=range]#slider-max::-webkit-slider-thumb {
+  background: #6d7247 !important;
+  border-radius: 50%;
+  border: 2px solid #4a4f31 !important;
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  margin-top: -8px;
+  position: relative;
+  z-index: 3;
+}
+input[type=range]#slider-max::-webkit-slider-runnable-track {
+  background: #688d5c;
+  height: 8px;
+  border-radius: 4px;
+}
+input[type=range]#slider-max::-moz-range-thumb {
+  background: #6d7247 !important;
+  border-radius: 50%;
+  border: 2px solid #4a4f31 !important;
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+}
+input[type=range]#slider-max::-moz-range-track {
+  background: #688d5c;
+  height: 8px;
+  border-radius: 4px;
+}
+
+/* Reduce margin between chart and slider */
+.js-plotly-plot .slider-container {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Reduce margin/padding for play/pause buttons container */
+.js-plotly-plot .modebar {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+/* Shrink spacing between play/pause buttons and slider container */
+#play-pause-container {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Shrink spacing between slider and chart */
+#range-slider-container {
+  margin-bottom: 0px;
+  width: 100%;
+  max-width: 700px; /* or the width of your chart container */
+  margin-left: 0;
+  margin-top: 0;
+}

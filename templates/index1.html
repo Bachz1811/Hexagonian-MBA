@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Undergraduate to MBA Maze</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='tab1/style1.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap" rel="stylesheet" />
+<body>
+
+  <!-- Main Content: Chart + Word Cloud + Description Section -->
+  <main id="interactive-dashboard"> <!-- Changed main container ID -->
+    <div class="box-container">
+    <!-- Section 1: Major Selection (Full Width) -->
+    <section id="major-selection-section" class="content-section">
+      <h2 class="section-title centered-title">Select an Undergraduate Major</h2>
+      <div class="word-cloud">
+        <span class="major-word" data-major="Economics">Economics</span>
+        <span class="major-word" data-major="Business">Business</span>
+        <span class="major-word" data-major="Arts">Arts</span>
+        <span class="major-word" data-major="Science">Science</span>
+        <span class="major-word" data-major="Engineering">Engineering</span>
+      </div>
+    </section>
+
+    <!-- Section 2: Illustrations and Descriptions (Full Width, with internal 2-column layout) -->
+    <section id="details-section" class="content-section">
+      <h2 class="section-title centered-title">Illustrations and Descriptions</h2>
+      <div class="details-flex-container"> <!-- This will be our 2-column row -->
+
+        <!-- Left Column: Chart -->
+        <div class="details-column chart-column-detail">
+          <div id="chart-container">
+            <div id="chart-area"></div>
+          </div>
+        <!-- Double-thumb range slider container -->
+  <div id="range-slider-container" style="margin-top: 0px; padding: 0 10px;">
+    <!-- Slider will be injected here by JS -->
+  </div>
+</div>
+
+        <!-- Right Column: Description -->
+        <div class="details-column description-column-detail">
+          <!-- <h3 class="subsection-title">Key Trends & Insights</h3> -->
+          <div id="chart-description-area">
+            <div id="description-box" class="description-content" style="display: none;">
+              <p id="description-text"></p>
+            </div>
+          </div>
+        </div>
+
+      </div> <!-- End of .details-flex-container -->
+    </section>
+</div>
+  </main>
+
+  <!-- JS Scripts -->
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+  <script src="{{ url_for('static', filename='tab1/script1.js') }}"></script>
+
+</body>
+</html>

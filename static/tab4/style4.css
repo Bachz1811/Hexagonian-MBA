@@ -1,0 +1,554 @@
+.chartjs-tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  pointer-events: none;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+
+.scroll-container, .card-front {
+  position: relative;
+}
+
+.bar-box {
+  transition: width 0.8s ease;
+}
+
+.card-front canvas:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+.card-front {
+  background: linear-gradient(135deg, #ffffff 0%, #f4f0eb 100%);
+}
+.card-back {
+  background: linear-gradient(135deg, rgba(30,30,47,0.9) 0%, #1e1e2f 100%);
+}
+
+.sort-btn, .compare-selectors button {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.sort-btn.active {
+  box-shadow: 0 4px 8px rgba(30,144,255,0.4);
+}
+
+canvas {
+  z-index: 1;
+}
+
+body {
+    font-family: 'Merriweather', Georgia, serif;
+    background-color: #f4ebdb;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #fdf7ed;
+    border-radius: 8px;
+}
+
+/* --- Top Reasons --- */
+.top-reasons {
+    margin-top: 20px;
+}
+
+.top-reasons h4 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    color: #222;
+}
+
+.sort-buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.sort-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px;
+    background-color: #e0e0e0;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.sort-btn:hover {
+    background-color: #ccc;
+}
+
+.sort-btn.active {
+    background-color:  #1e90ff;
+    color: white;
+}
+
+.reason-item:last-child {
+    border-bottom: none;
+}
+
+/* --- Compare Section --- */
+.compare-mode {
+    margin: 40px auto;
+    padding: 20px;
+    max-width: 700px;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+.compare-selectors {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.compare-selectors select,
+.compare-selectors button {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.compare-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.compare-bar {
+    display: grid;
+    grid-template-columns: 70px 1fr 1fr;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+}
+
+.compare-bar span {
+    font-weight: bold;
+    text-align: right;
+}
+
+.bar-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.bar-box {
+    height: 10px;
+    border-radius: 999px;
+    background-color: #ccc;
+    min-width: 10px;
+}
+
+.bar-reason1 { background-color: #1e90ff; }
+.bar-reason2 { background-color: #ff4040; }
+
+.reason-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+}
+
+.reason-item:last-child {
+    border-bottom: none;
+}
+
+.reason-label {
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.reason-bar-container {
+    width: 100%;
+    background-color: #eaeaea;
+    border-radius: 20px;
+    height: 8px;
+    margin-top: 4px;
+    overflow: hidden;
+}
+
+.reason-bar {
+    height: 8px;
+    border-radius: 20px;
+    background-color: #1e90ff; 
+    transition: width 0.8s ease-in-out, background-color 0.4s ease;
+}
+
+.reason-percent {
+    min-width: 60px;
+    text-align: right;
+    font-weight: 600;
+    color: #222;
+}
+
+.scroll-container {
+  display: flex;
+  overflow-x: hidden;
+  gap: 1rem;
+  padding: 1rem;
+  scroll-snap-type: x mandatory;
+  justify-content: center; 
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 230px;
+  height: auto;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 1rem;
+  text-align: center;
+  flex-shrink: 1;
+  perspective: 1000px;
+  scroll-snap-align: start;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  height: auto;              /* ✅ Enable auto height */
+  min-height: 280px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.card-front canvas {
+  max-width: 120px;
+  height: auto;
+}
+.multi-legend {
+  font-size: 12px;
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.card-front {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-back {
+  background: #1e1e2f;
+  color: white;
+  transform: rotateY(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.reason {
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+.percent {
+  font-size: 1.0rem;
+  margin-top: 10px;
+}
+
+/* --- Card animation on scroll --- */
+.card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Flip easing --- */
+.card-inner {
+  transition: transform .8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.card-back {
+  background:
+    radial-gradient(circle at center,
+      rgba(30,30,47,0.85),
+      rgba(30,30,47,1)
+    ),
+    #1e1e2f;
+  position: relative;
+  padding: 1rem;                     
+  display: flex;
+  flex-direction: column;
+  justify-content: center;           
+  align-items: center;               
+  text-align: center;  
+
+}
+.card-back .back-title {
+  font-size: 0.9rem;
+  margin-bottom: 0rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.card-back p {
+  margin: 0;
+  max-width: 160px;                  
+  line-height: 1.4;                  
+  font-size: 1rem;
+  color: #000;
+  word-wrap: break-word;     
+  text-align: center;
+}
+
+/* --- Share button --- */
+.share-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* --- Gender-specific active button colors --- */
+.sort-btn[data-sort="Male"].active {
+  background-color: #1E90FF;  
+  color: #FFFFFF;
+}
+
+.sort-btn[data-sort="Female"].active {
+  background-color: #FF69B4;  
+  color: #FFFFFF;
+}
+
+.sort-btn[data-sort="Other"].active {
+  background-color: #FFA500;  
+  color: #FFFFFF;
+}
+
+.sort-btn[data-sort="All"].active {
+  background-color: #1eff62;  
+  color: #FFFFFF;
+}
+
+/* 1) Gradient border + subtle drop-shadow + transition on every card */
+.card {
+  border: 2px solid transparent;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+/* 3) Pastel background for the back side */
+.card-back {
+  background: #fde2e4;   
+  color: #333;           
+}
+
+/* === Compare Side-by-Side Cards === */
+.compare-selectors {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.compare-cards {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.compare-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 200px;
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.compare-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.compare-card .icon {
+  font-size: 2rem;
+}
+
+.compare-card .reason {
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+.compare-bar-mini {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  margin: 0.3rem 0;
+}
+
+.compare-bar-mini .bar-box {
+  height: 8px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.compare-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #666;
+  margin: 0 0.5rem;
+}
+
+.compare-insight {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.compare-insight .insight-box {
+  background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  font-size: 1.1rem;
+  color: #333;
+  display: inline-block;
+  animation: fadeIn 0.5s ease-out;
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.compare-insight details {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.compare-insight summary {
+  cursor: pointer;
+  color: #1e90ff;
+  user-select: none;
+}
+
+.compare-insight .insight-list {
+  margin: 0.5rem 0 0 1rem;
+  padding: 0;
+  list-style: disc;
+}
+
+/* Align insight list items */
+.insight-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0 0;
+}
+
+.insight-list li {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 0.25rem;
+}
+
+.insight-gender {
+  width: 80px;           
+  font-weight: 600;
+}
+
+.insight-value {
+  flex: 1;               
+  text-align: left;
+}
+
+/* Center the Compare section title */
+.compare-mode .compare-title {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Center everything inside the insight area */
+.compare-insight {
+  text-align: center;
+}
+
+.compare-insight details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.insight-list {
+  margin: 0.5rem 0 0;
+  padding: 0;
+  display: inline-block;
+  list-style-position: inside;
+}
+
+.insight-list li {
+  text-align: center;
+}
+
+.hidden { display: none; }

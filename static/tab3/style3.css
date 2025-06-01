@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap');
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 40px;
+  letter-spacing: 0.6px;
+  text-align: center !important;
+  margin-top: 30px;
+  color: #3e2a1c;
+  text-shadow: 1px 1px 0 #f4ebdb, 2px 2px 3px rgba(0, 0, 0, 0.07);
+}
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f4ebdb;
+        }
+        #scroll-boxes {
+        margin-top: 30px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative; 
+        }
+
+        #chart-container {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto 50px auto; 
+            gap: 1rem;
+            max-width: 90vw;
+        }
+
+        #tab3-scroll-section {
+            padding-top: 5vh; 
+            position: relative; 
+            transform: translateZ(0);
+}
+
+        #ent-legend {
+    margin-right: -25px;
+    color: #c1551a;
+
+}
+        #net-legend {
+    margin-left: 20px;
+    color: #1d4f43
+        }
+        
+        canvas {
+    width: 450px !important;
+    height: 450px !important;
+    opacity: 1;
+}
+        h1 {
+            position: relative;
+            margin: 20px auto;
+            top: 20px;
+            text-align: center !important;
+            z-index: 10;
+            font-family: merriweather;
+        }
+        .legend {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .legend div {
+            margin-bottom: 12px;
+            opacity: 1;
+            transition: opacity 0.4s ease;
+        }
+        .legend-box {
+            width: 12px;
+            height: 12px;
+            display: inline-block;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        .legend-title {
+            font-family: 'Noto Serif Display', serif;
+            font-weight: bold;
+        }
+        .legend strong {
+            font-family: 'Merriweather', serif;
+            font-weight: bold;
+        }
+
+.scroll-box {
+  max-width: 350px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #222;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  position: fixed;
+  opacity: 0;
+  z-index: 20;
+  padding: 16px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  font-family: 'Merriweather', serif;
+  font-weight: normal;
+  line-height: 1.6;
+  transition: transform 0.6s ease, opacity 0.4s ease;
+  pointer-events: none; /* Prevent hover glitches */
+  position: absolute;
+  transform: translateY(100vh);
+}
+
+.scroll-box.left {
+  left: 2%;
+  transform: translateY(100vh);
+  background-color: rgba(253, 207, 43, 0.15); /* #fdcf2b */
+}
+
+.scroll-box.right {
+  right: 2%;
+  transform: translateY(100vh);
+  background-color: rgba(193, 85, 26, 0.15); /* #c1551a */
+}
+.scroll-box.active {
+            opacity: 1;
+}
+            @font-face {
+            font-family: 'Mekaryu Display Serif';
+            src: url('Mekaryu-Display-Serif.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }

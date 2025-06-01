@@ -1,0 +1,1088 @@
+/* Add these styles to your existing CSS file (e.g., static/style.css) */
+
+/* Styles for the radial progress ring container */
+.radial-progress {
+  position: relative;
+  /* Adjust size as needed, matching the SVG viewBox or container */
+  width: 120px; /* Container size matching SVG viewBox */
+  height: 120px; /* Container size matching SVG viewBox */
+  display: block; /* Or block depending on layout */
+}
+
+/* Styles for the SVG element */
+.radial-progress svg {
+  transform: rotate(-90deg); /* Rotate to start from the top */
+  width: 100%; /* Make SVG fill its container */
+  height: 100%; /* Make SVG fill its container */
+}
+
+/* Styles for the background circle */
+.radial-progress .circle-bg {
+  fill: none;
+  stroke: #333; /* Background circle color */
+  stroke-width: 8; /* Adjust stroke width relative to radius/viewBox */
+}
+
+/* Styles for the progress circle */
+.radial-progress .circle-progress {
+  fill: none;
+  /* Stroke color is set dynamically by JS based on score */
+  stroke-width: 8; /* Adjust stroke width */
+  stroke-linecap: round; /* Smooth ends of the progress bar */
+  transition: stroke-dashoffset 0.8s ease; /* Smooth animation effect */
+}
+
+/* Styles for the percentage text overlay */
+.radial-progress .percentage-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.8em; /* Adjust font size */
+  font-weight: 700;
+  user-select: none;
+  pointer-events: none; /* Prevent interaction */
+  text-align: center; /* Center the text */
+  /* Color is set dynamically by JS based on score */
+}
+
+/* Styles for the label below the ring (using existing class) */
+.match-label {
+  margin-top: 10px; /* Space between ring and label */
+  font-size: 0.9em; /* Font size for the label */
+  color: #aaa; /* Color for the label */
+  text-align: center; /* Center the label text */
+}
+
+/* Basic layout for the column containing the ring and label */
+.candidate-card .match-column {
+display: flex;
+flex-direction: column;
+align-items: center; /* Center the ring and label horizontally */
+justify-content: center; /* Center vertically if needed */
+padding: 10px; /* Add some padding around the column */
+}
+
+/* Hide the redundant match-score text element */
+.candidate-card .match-column .match-score {
+display: none;
+}
+
+@font-face {
+  font-family: 'Mekaryu';
+  src: url('/static/Mekaryu.otf') format('opentype');
+  }
+
+body {
+  margin: 0;
+  padding: 40px 20px;
+  font-family: 'Montserrat', sans-serif;
+  color: #3a2c1c;
+  background: url('/static/bg-mba.png') no-repeat center center fixed;
+  background-size: cover;
+  }
+
+h1 {
+  font-family: 'Mekaryu', serif;
+  background-color: rgba(181, 59, 27, 0.9);
+  color: white;
+  text-align: center;
+  padding: 15px 30px;
+  border-radius: 15px;
+  width: fit-content;
+  margin: auto;
+  font-size: 28px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.container {
+  border: 2px solid #b53b1b;
+  border-radius: 18px;
+  padding: 35px;
+  margin-top: 30px;
+  background-color: rgba(255, 250, 240, 0.82);
+  backdrop-filter: blur(3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns for desktop */
+  gap: 18px 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+input,
+select {
+  padding: 10px 12px;
+  border: 2px solid #b53b1b;
+  border-radius: 10px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #3a2c1c;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #913014;
+  box-shadow: 0 0 0 2px rgba(181, 59, 27, 0.2);
+}
+
+.slider-group {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.slider-value {
+  font-weight: bold;
+  align-self: flex-start;
+  padding-left: 12px;
+  color: #b53b1b;
+  font-size: 15px;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  background: linear-gradient(to right, var(--color, #b53b1b) var(--val, 50%), #eee var(--val, 50%));
+  border-radius: 8px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.08);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 18px;
+  width: 18px;
+  background: #b53b1b;
+  border-radius: 50%;
+  border: 2px solid white;
+  margin-top: -7px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-track {
+  height: 4px;
+  background: #ddd;
+  border-radius: 8px;
+}
+
+input[type="range"]::-moz-range-progress {
+  height: 4px;
+  background: #b53b1b;
+  border-radius: 8px;
+}
+
+input[type="range"]::-moz-range-thumb {
+  height: 18px;
+  width: 18px;
+  background: #b53b1b;
+  border: 2px solid white;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+button {
+  grid-column: 1 / -1;
+  justify-self: center;
+  padding: 14px 30px;
+  font-size: 16px;
+  background-color: #b53b1b;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+button:hover {
+  background-color: #a33114;
+  transform: translateY(-1px);
+}
+
+#result {
+  margin-top: 40px;
+  padding: 25px;
+  background-color: rgba(255, 250, 240, 0.88);
+  border: 2px dashed #b53b1b;
+  border-radius: 15px;
+  text-align: left !important;
+}
+
+/* Basic mode result layout */
+.basic-result-container {
+  border: 2px solid #b94a2c;
+  border-radius: 12px;
+  padding: 18px 18px 10px 18px;
+  background: #fffaf5;
+  margin-bottom: 24px;
+}
+
+.basic-top-row { /* New style for the wrapper */
+  display: flex;
+  gap: 20px; /* Adjust gap between basic-columns and basic-skills-col */
+  margin-bottom: 20px; /* Space below this row before info-column and risk-section */
+  align-items: flex-start; /* Align children to the top */
+}
+
+.basic-columns {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  justify-content: flex-start;
+  /* margin-bottom removed as .basic-top-row now handles spacing below it */
+}
+.basic-match-col, .basic-scholarship-col, .basic-skills-col {
+  border-radius: 8px;
+  padding: 18px 24px 18px 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  box-sizing: border-box;
+  align-items: center;
+  min-width: 220px;
+  max-width: 550px;
+  position: relative;
+}
+/* Make the basic scholarship column take up more space relative to the match column */
+.basic-scholarship-col {
+  flex-grow: 2.5;
+}
+
+.basic-top-row > .basic-columns { /* Ensure .basic-columns is a flexible item */
+  flex: 1; /* Allows it to grow and shrink, sharing space */
+}
+/* .basic-skills-col already has 'flex: 1 1 0;' from the rule above, so it will also share space */
+
+.basic-results-card .summary {
+  color: #3a2c1c;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  max-width: 50%; /* Add this line */
+  margin: 0 auto; /* Add this line to center it */
+}
+
+.skills-section {
+  margin-top: 20px; /* Provides spacing from the section above */
+  background: #fdf8ee; /* Light background for the section */
+  border-radius: 8px;
+  padding: 18px 24px;
+}
+
+.skills-section h4 {
+  font-size: 1.2rem;
+  color: #024b4b; /* Color similar to other section titles */
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.skills-list {
+  list-style: none; /* Remove default bullet points */
+  padding: 0;
+  margin: 0;
+}
+
+.match-label-top, .scholarship-label-top {
+  font-size: 20px;
+  font-weight: bold;
+  color: #444;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.match-label-centered {
+  font-size: 24px;
+  font-weight: bold;
+  color: #555;
+  margin-top: 10px;
+  text-align: center;
+}
+.radial-progress {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+}
+.percentage-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 32px;
+  font-weight: bold;
+  color: #4caf50;
+}
+.percentage-text.scholarship {
+  color: #b94a2c;
+}
+.segmented-meter-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  background: #f4e1db;
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
+  margin-top: 10px;
+}
+
+.segmented-meter-container .label {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #aa3b19;
+  text-align: center;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.frame-box {
+  background: #fffef8;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 15px 0;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 240px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  align-items: center;
+  box-sizing: border-box;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.08);
+}
+
+.segments {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  padding: 0 4px;
+  gap: 6px;
+}
+
+.segment {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 20px;
+  background: #ddd;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.segment:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  background: #333;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.segment {
+  flex: 0 0 auto;
+  width: 10px;
+  height: 20px;
+  background: #ddd;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+.segment.filled-low { background: #f44336; }
+.segment.filled-medium { background: #ff9800; }
+.segment.filled-high { background: #4caf50; }
+.scholarship-percent {
+  font-size: 22px;
+  color: #b94a2c;
+  font-weight: bold;
+  margin-top: 2px;
+}
+
+.advanced-details-grid { /* For Risk Factors & Scholarship side-by-side */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  form {
+grid-template-columns: 1fr;
+  }
+
+  button {
+grid-column: span 1;
+  }
+}
+
+#map {
+  border: none;
+  border-radius: 0;
+}
+
+#map.map-ready {
+  border: 2px solid #c66e21;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.match-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 160px;
+}
+
+.info-column {
+  flex: 2;
+  min-width: 300px;
+}
+
+.info-column h3 { /* Titles like "Recommended Specialization" */
+  color: #024b4b;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.salary-column {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+#result > h3 { /* For main section titles like "Recommended University Programs" */
+  color: #b53b1b;
+  font-size: 1.4rem;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.risk-section h4 {
+font-size: 24px; /* Increase size */
+color: #d9534f;   /* Bootstrap-style red */
+font-weight: bold;
+margin-bottom: 15px; /* Added margin */
+}
+
+#result .career-path-section h4,
+#result .recommended-skills-section h4 { /* For sub-section titles */
+  font-size: 1.3rem;
+  color: #b53b1b;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.risk-section {
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.risk-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.risk-line .label {
+  flex: 1;
+  font-weight: 500;
+}
+
+.risk-line .bar {
+  flex: 2;
+  background: #eee;
+  border-radius: 8px;
+  height: 10px;
+  position: relative;
+  overflow: hidden; /* Ensures the ::before pseudo-element respects the border-radius */
+}
+
+/* Apply to both .bar (advanced) and .risk-meter (basic) */
+.risk-line .bar.risk-level-low::before,
+.risk-line .risk-meter.risk-level-low::before {
+  background-color: #4caf50; /* Green for low risk */
+}
+.risk-line .bar.risk-level-medium::before,
+.risk-line .risk-meter.risk-level-medium::before {
+  background-color: #ff9800; /* Orange for medium risk */
+}
+.risk-line .bar.risk-level-high::before,
+.risk-line .risk-meter.risk-level-high::before {
+  background-color: #f44336; /* Red for high risk */
+}
+/* Updated CSS for risk-meter and strength-meter using pseudo-elements for fill */
+.risk-line .risk-meter,
+.program-strengths .strength-meter {
+  flex: 2; /* For risk-meter */
+  background: #eee;
+  border-radius: 8px;
+  height: 10px; /* Or as desired */
+  position: relative;
+  overflow: hidden; /* Ensures pseudo-element respects border-radius */
+}
+.program-strengths .strength-meter { /* Specific adjustments if needed */
+width: 100%; /* Example if it needs full width in its context */
+}
+
+.risk-line .bar::before, /* Add this selector */
+.risk-line .risk-meter::before,
+.program-strengths .strength-meter::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  background: #b53b1b;
+  border-radius: 8px;
+  width: var(--value, 0%); /* Controlled by JavaScript */
+  transition: width 0.5s ease-in-out;
+}
+
+.meter-labels {
+  display: flex;
+  justify-content: space-around;
+  font-size: 14px;
+  font-weight: bold;
+  background: #ddd;
+  border-radius: 6px;
+  padding: 6px;
+}
+
+.candidate-card,
+.candidate-card.new-layout {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 2px solid #b53b1b;
+  background: #fffefb;
+  border-radius: 15px;
+}
+
+.divider-vert {
+  height: 100px;
+  width: 1px;
+  background: #ddd;
+  margin: 0 20px;
+}
+
+.divider-horz {
+  height: 1px;
+  background: #ddd;
+  margin: 20px 0;
+}
+
+.fit-type {
+  background: #d48f63;
+  color: #fff;
+  padding: 6px 18px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Circular Chart Styles */
+.circular-chart {
+  width: 90px;
+  height: 90px;
+  /* stroke-width: 16; /* This property on the SVG element itself is not standard for controlling child path stroke widths here.
+  The .circle class correctly defines the stroke-width for the path. */
+  transform: rotate(-90deg);
+}
+
+.circular-chart-container {
+  position: relative; /* Establishes a positioning context for the .percentage-overlay */
+  width: 90px;   /* Matches the width of the .circular-chart (SVG) */
+  height: 90px;  /* Matches the height of the .circular-chart (SVG) */
+  /* This container will be centered horizontally by its parent .match-column's align-items: center */
+}
+
+.circle {
+  stroke: #aa3b19;
+  stroke-width: 16;
+  fill: none;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.percentage {
+  transform: rotate(90deg);
+  font-size: 12px;
+  font-weight: bold;
+  fill: #333;
+}
+
+/* Segmented Meter Styles */
+.segmented-meter-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  background: #f4e1db;
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
+  margin-top: 10px;
+}
+
+.segmented-meter-container .label {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #aa3b19;
+  text-align: center;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.frame-box {
+  background: #fffaf0;
+  border-radius: 14px;
+  padding: 20px;
+  margin: 0 auto;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.03);
+  width: 100%;
+  max-width: 95%; /* Increased from 80% to make the container wider */
+}
+
+.segments {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.segment:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  background: #333;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.segment {
+  flex: 1 0 4.5%;
+  position: relative;
+  max-width: 20px;
+  height: 30px; /* Increased from 24px to make segments taller */
+  background: #ddd;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.segment.filled-low {
+  background-color: #e74c3c !important;
+  box-shadow: 0 0 4px rgba(231, 76, 60, 0.4);
+}
+
+.segment.filled-medium {
+  background-color: #f39c12 !important;
+  box-shadow: 0 0 4px rgba(243, 156, 18, 0.4);
+}
+
+.segment.filled-high {
+  background-color: #2ecc71 !important;
+  box-shadow: 0 0 4px rgba(46, 204, 113, 0.4);
+}
+
+.segment.filled {
+  animation: none;
+}
+
+@keyframes fillUp {
+  0% {
+background-color: #ddd;
+  }
+  100% {
+background-color: inherit;
+  }
+}
+
+.percent-text {
+  margin-top: 12px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #aa3b19;
+  text-align: center;
+}
+
+.meter-track {
+  display: flex;
+  position: relative;
+  height: 30px;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 8px auto;
+  width: 100%;
+  max-width: 100%;
+  box-shadow: 0 0 0 1px #aaa inset;
+}
+
+.pointer {
+  position: absolute;
+  top: -16px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 16px solid #444;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.meter-scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #555;
+  max-width: 400px;
+  margin: 4px auto 0;
+}
+
+.meter-values {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 8px;
+}
+
+.meter-values .value,
+.meter-values .label {
+  background: #ddd;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .card-header {
+flex-direction: column;
+align-items: stretch;
+gap: 20px;
+  }
+
+  .match-column,
+  .info-column,
+  .salary-column {
+align-items: center;
+text-align: center;
+  }
+
+  .salary-column {
+align-items: center;
+  }
+
+  .risk-line {
+flex-direction: column;
+align-items: flex-start;
+  }
+
+  .risk-line .bar {
+width: 100%;
+  }
+
+  .risk-line .score {
+align-self: flex-end;
+  }
+}
+.executive-summary-text {
+  max-width: 60rem; /* Limits the width of the summary text */
+  margin: 0 auto; /* Centers the text block on the page */
+  text-align: justify; /* Optional: for better readability of long text */
+}
+.match-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 160px;
+  position: relative;
+}
+.percentage-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10px;
+  font-weight: bold;
+  color: #024b4b;
+  pointer-events: none;
+}
+.match-label {
+  margin-top: .5rem;
+  font-size: .9rem;
+  text-transform: uppercase;
+  color: #777;
+}
+   
+/* Salary Section Styles */
+.salary-section {
+  text-align: right;
+  margin-top: 1.5rem;
+}
+
+.salary-title {
+  font-weight: 700;
+  color: #024b4b;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.salary-value {
+  font-size: 70px; /* Increased size */
+  font-weight: bold;
+  color: #5c9960;
+  margin: 0.5rem 0;
+}
+
+.salary-increase {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  font-size: 1.3rem;
+  color: #b53b1b;
+  font-weight: 600;
+}
+
+.salary-increase .icon {
+  background-color: #0f3e3e;
+  color: white;
+  font-size: 1rem;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Ensure SVG paths don't fill */
+.circular-chart path {
+  fill: none;
+  color:rgb(155, 189, 91);
+}
+
+@media (max-width: 768px) {
+  .salary-section {
+margin-top: 1rem;
+text-align: center;
+  }
+  
+  .salary-increase {
+justify-content: center;
+  }
+  
+  .salary-value {
+font-size: 3rem; /* Increased responsive size */
+  }
+  
+  .salary-increase {
+font-size: 1.1rem;
+  }
+}
+
+/* Improvements Section Styles */
+.improvements-section {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: #fffaf0;
+  border-radius: 12px;
+  border: 1px solid #f4e1db;
+}
+
+.improvements-section h3 {
+  color: #b53b1b;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.improvements-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.improvements-list li {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 16px;
+  line-height: 1.5;
+  color: #3a2c1c;
+}
+
+.improvements-list li:last-child {
+  margin-bottom: 0;
+}
+
+.improvements-list li::before {
+  content: attr(data-number);
+  position: absolute;
+  left: 0;
+  top: 0; /* Align number with the top of the text line */
+  color: #b53b1b;
+  font-weight: 600;
+  line-height: inherit; /* Match li's line-height for better vertical alignment */
+}
+/* In your CSS */
+.improvements-list li strong {
+  font-weight: 600; /* Or 'bold' */
+  color: #b53b1b; /* Example: Your theme's accent color for emphasis */
+  /* Add any other styles like background-color, text-decoration, etc. */
+}
+.improvements-list li span {
+  font-weight: 400; /* Normal weight for the rest of the text */
+  color: #3a2c1c; /* Example: Your theme's primary text color */
+}
+
+.tuition-label {
+  font-weight: bold;
+  color: #7a2a0e;
+  margin-right: 4px;
+}
+.tuition-value {
+  color: #1a3e2a;
+  font-weight: 600;
+}
+
+.program-tag {
+  display: inline-block;
+  background: #f4e1db;
+  color: #b53b1b;
+  font-size: 0.95em;
+  padding: 3px 10px;
+  border-radius: 8px;
+  margin-right: 6px;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.assessment-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+  background-color: #b53b1b;
+}
+
+input:checked + .toggle-slider:before {
+  transform: translateX(26px);
+}
+
+.toggle-label {
+  font-weight: bold;
+  color: #3a2c1c;
+}
+
+.advanced-fields {
+  display: none; /* Default state, JS will toggle */
+  grid-column: 1 / -1; /* Make this div span all columns of the parent form grid */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px 20px;
+}
+
+/* Removed: .advanced-fields > div { grid-column: span 3; } */
+/* This allows advanced fields to naturally flow into 3 columns */
+
+.assessment-type.active {
+  color: #b53b1b;
+}
+
+.basic-fields {
+  display: contents; /* So the grid still applies to children */
+}

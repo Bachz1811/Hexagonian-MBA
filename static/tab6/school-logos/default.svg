@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="90" fill="#f4e1db"/>
+  
+  <!-- MBA Text -->
+  <text x="100" y="85" font-family="Arial, sans-serif" font-size="48" font-weight="bold" text-anchor="middle" fill="#b53b1b">MBA</text>
+  
+  <!-- Decorative Elements -->
+  <path d="M40,100 Q100,40 160,100" stroke="#b53b1b" stroke-width="4" fill="none"/>
+  <path d="M40,120 Q100,180 160,120" stroke="#b53b1b" stroke-width="4" fill="none"/>
+  
+  <!-- Small Circles -->
+  <circle cx="60" cy="100" r="8" fill="#b53b1b"/>
+  <circle cx="140" cy="100" r="8" fill="#b53b1b"/>
+</svg> 

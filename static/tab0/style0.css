@@ -1,0 +1,132 @@
+style.css
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: merriweather;
+  overflow-x: hidden;
+  background: #f4ebdb !important;
+}
+
+/* — Introduction — */
+.intro,
+.intro * {
+  height: 100vh;
+  opacity: 1 !important;
+  display: block !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* Both images fill the viewport */
+.intro-img {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Make sure text-img sits on top */
+.text-img {
+  z-index: 2;
+}
+
+/* bg-img underneath */
+.bg-img {
+  z-index: 1;
+}
+
+/* — Timeline container & stages — */
+.timeline {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.timeline-inner {
+  display: flex;
+  height: 100vh;
+  width: unset;
+  min-width: 100vw;
+  position: relative;
+  will-change: transform;
+}
+
+.stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+}
+
+.intro-stage {
+  max-width: 800px;
+  height: 300px;
+  margin-top: 200px;         /* drastically reduce vertical padding */
+  background-color: #f9f6f3;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(21,31,68,0.1);
+  border: 2px solid #b53b1b;
+  font-family: 'Montserrat', sans-serif;
+  color: #3a2c1c;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  text-align: center;
+  word-wrap: break-word;
+  position: relative;
+  display: flex;
+}
+
+.illust {
+  position: absolute;
+  width: 40%;
+  opacity: 1;
+  display: block !important;
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.illust.group,
+.illust.girl {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: block !important;
+  margin: 0;
+  padding: 0;
+}
+
+.illust.group {
+  width: 60vw;
+  max-width: 75vw;
+  height: auto;
+  max-height: 60vh;
+}
+
+.illust.girl {
+  width: 78vw;
+  max-width: 78vw;
+  max-height: 78vh;
+}
+
+/* — Narrative text positioning — */
+.narrative {
+  position: absolute;
+  width: 80%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.2rem;
+  color: #333;
+  text-align: center;
+  pointer-events: none;
+}
+.narrative-top    { top: 15%; }
+.narrative-bottom { bottom: 10%; }
+
+

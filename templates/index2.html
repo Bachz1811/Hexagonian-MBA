@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Salary of four Job Levels before and after MBA</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='tab2/style2.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    #salaryChart { max-width: 600px; height: 300px; }
+  </style>
+</head>
+
+<body>
+  <div class="box-container2">
+
+  <!-- Main heading -->
+  <h1-1>Salary of four Job Levels before and after MBA</h1-1>
+
+  <!-- Three-column layout: flow chart, bar chart, flip-card -->
+  <div class="layout">
+
+    <!-- Left column: stair-step chart -->
+    <div class="col flow-col">
+      <div class="stair-chart">
+        <div class="step step-4" data-step="Senior Level">Senior Level</div>
+        <div class="step step-3" data-step="Experienced Level">Experienced Level</div>
+        <div class="step step-2" data-step="Junior Level">Junior Level</div>
+        <div class="step step-1" data-step="Entry Level">Entry Level</div>
+      </div>
+      <div id="currentLevelStatus" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+    </div>
+
+    <!-- Middle column: grouped bar chart -->
+    <div class="col chart-col">
+      <div id="chart-container">
+        <canvas id="salaryChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Right column: flip-card detailed description + quick overview -->
+    <div class="col card-col">
+      <div class="card-container">
+        <div class="card2">
+          <div class="card2-inner">
+            <div class="card-front">
+              Detailed Description
+            </div>
+            <div class="card-back">
+              <!-- JS sẽ populate chi tiết job-level vào đây -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick overview static card -->
+      <div class="quick-overview-card">
+        <div class="quick-title">Quick overview</div>
+        <div class="quick-content">
+          Across all Entry, Junior, Experienced and Senior levels, expected salaries after getting an MBA are significantly higher than before. Before the MBA, the Junior level has the highest salary (around $76,000), while the Senior level is the lowest (around $74,500). After the MBA, salaries across all job levels rise to roughly $130,000 – though the Senior level earns just slightly more – highlighting the MBA’s benefits at every career stage.
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <script>
+  const DATA_JSON_URL = "{{ url_for('static', filename='tab2/data.json') }}";
+  </script>
+<script src="{{ url_for('static', filename='tab2/script2.js') }}"></script></body>
+</html>

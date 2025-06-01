@@ -1,0 +1,22 @@
+{
+  "Entry Level": {
+    "experience_range": "0\u20131 years",
+    "average_salary_before": 75253.85,
+    "average_salary_after": 130283.04
+  },
+  "Junior Level": {
+    "experience_range": "2\u20133 years",
+    "average_salary_before": 76033.46,
+    "average_salary_after": 130234.15
+  },
+  "Experienced Level": {
+    "experience_range": "4\u20136 years",
+    "average_salary_before": 75191.28,
+    "average_salary_after": 130218.12
+  },
+  "Senior Level": {
+    "experience_range": "7\u20139 years",
+    "average_salary_before": 74505.2,
+    "average_salary_after": 130507.85
+  }
+}

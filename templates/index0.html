@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" />
+  <meta charset="UTF-8" />
+  <title>Personal Growth Story</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='tab0/style0.css') }}" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<head>
+
+<body>
+
+  <!-- 1. Introduction Section -->
+  <section class="intro">
+   <!-- Text illustration -->
+  <div class="intro-text">
+    <img
+      src="/static/img/intro-text.png" alt="Text"
+      class="intro-img text-img"
+    />
+  </div>
+  <!-- Background illustration -->
+  <div class="intro-bg">
+    <img
+      src="/static/img/intro-bg.png" alt="Background"
+      class="intro-img bg-img"
+      onerror="this.style.display='none';console.error('Image not found:', this.src);"
+    />
+  </div>
+  </section>
+
+  <!-- 2. Timeline Sections -->
+  <section class="timeline">
+    <div class="timeline-inner">
+      <!-- Kindergarten -->
+      <div class="stage" id="stage-kinder">
+        <img src="{{ url_for('static', filename='img/friend-kindergarten.png') }}" class="illust group" />
+        <div class="narrative narrative-top">
+          From kindergarten, I loved exploring—every storybook and puzzle sparked my curiosity.
+        </div>
+        <div class="narrative narrative-bottom">
+          Each day was an adventure filled with discovery.
+        </div>
+      </div>
+      <!-- Transition: Only Girl Kindergarten -->
+      <div class="stage transition" id="transition-kinder-primary">
+        <img src="{{ url_for('static', filename='img/girl-kindergarten.png') }}" class="illust girl" />
+      </div>
+      <!-- Primary School -->
+      <div class="stage" id="stage-primary">
+        <img src="{{ url_for('static', filename='img/friend-primary.png') }}" class="illust group" />
+       
+        <div class="narrative narrative-top">
+          In primary school, my endless questions and enthusiasm grew.
+        </div>
+        <div class="narrative narrative-bottom">
+          Teachers encouraged my curiosity, helping me carefully approach new challenges and set a foundation for thoughtful learning.
+        </div>
+      </div>
+
+      <!-- Transition: Only Girl Primary -->
+      <div class="stage transition" id="transition-primary-highschool">
+        <img src="{{ url_for('static', filename='img/girl-primary.png') }}" class="illust girl" />
+      </div>
+      <!-- High School -->
+      <div class="stage" id="stage-highschool">
+        <img src="{{ url_for('static', filename='img/friend-highschool.png') }}" class="illust group" />
+      
+        <div class="narrative narrative-top">
+          High school taught me balance. 
+        </div>
+        <div class="narrative narrative-bottom">
+          Ambition became purposeful as I took on leadership roles, learning that careful decisions and patience were key to steady growth.
+        </div>
+      </div>
+      <!-- Transition: Only Girl Highschool -->
+      <div class="stage transition" id="transition-highschool-university">
+        <img src="{{ url_for('static', filename='img/girl-highschool.png') }}" class="illust girl" />
+      </div>
+      <!-- University -->
+      <div class="stage" id="stage-university">
+        <img src="{{ url_for('static', filename='img/friend-university.png') }}" class="illust group" />
+      
+        <div class="narrative narrative-top">
+          University expanded my world further.
+        </div>
+        <div class="narrative narrative-bottom">
+          Classes, internships, and projects clarified my goals, showing me that every experience was a learning opportunity.
+        </div>
+      </div>
+      <!-- Transition: Only Girl University -->
+      <div class="stage transition" id="transition-university-working">
+        <img src="{{ url_for('static', filename='img/girl-university.png') }}" class="illust girl" />
+      </div>
+      <!-- Working -->
+      <div class="stage" id="stage-working">
+        <img src="{{ url_for('static', filename='img/friend-working.png') }}" class="illust group" />
+        <div class="narrative narrative-top">
+          Entering the workforce deepened my ambition.
+        </div>
+        <div class="narrative narrative-bottom">
+          I realized growth required continuous learning, leading naturally to my decision to pursue an MBA—a key step toward achieving my future aspirations.
+        </div>
+      </div>
+      <div class="stage intro-stage" id="stage-intro">
+  <div class="intro-text-wrapper">
+    <p>
+      This website is designed to share my journey and the lessons learned along the way. 
+      But more than that, it serves as a platform to connect with others who share similar experiences and aspirations to MBA pursuit. 
+      Explore the site to learn more about the factors that may influence your decision to pursue an MBA. 
+      At the end, there is a section to help you evaluate yourself whether you are ready for an MBA. 
+      I hope you find it helpful and inspiring as you navigate your own path toward personal and professional growth.
+    </p>
+  </div>
+</div>
+    </div>
+  </section>
+
+  <script src="{{ url_for('static', filename='tab0/script0.js') }}"></script>
+</body>
+</html>
+

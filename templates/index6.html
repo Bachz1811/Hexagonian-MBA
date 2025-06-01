@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>How I Match with MBA Degree?</title>
+  <!-- 1. Fonts & CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="static/tab6/style.css" /> <!-- ✅ Link your main stylesheet -->
+  <link rel="stylesheet" href="static/tab6/basic-style.css" />
+  <link rel="stylesheet" href="static/tab6/mba-cards.css" />
+
+  <!-- 2. Third-party JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+
+  <!-- ✅ 3. Custom scripts: helper first, main logic second -->
+  <script src="static/tab6/segmentedMeter.js" defer></script>
+  <script src="static/tab6/map.js" defer></script>
+  <script src="/static/tab6/mba-cards.js" defer></script>
+  <script src="/static/tab6/script.js" defer></script>
+
+</head>
+<body>
+  <h1>How I match with MBA degree?</h1>
+
+  <div class="container">
+    <div class="assessment-toggle">
+      <span class="toggle-label assessment-type active" id="basic-label">Basic Assessment</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="assessment-toggle">
+        <span class="toggle-slider"></span>
+      </label>
+      <span class="toggle-label assessment-type" id="advanced-label">Advanced Assessment</span>
+    </div>
+
+    <form id="mbaFormTab6" method="POST" action="/submit_mba_profile_tab6">
+      <input type="hidden" id="assessment_type" name="assessment_type" value="basic">
+      <div class="basic-fields">
+        <div>
+          <label for="Age">Age</label>
+          <input type="number" id="Age" name="Age" required min="18" max="65">
+        </div>
+        <div>
+          <label for="Work_Experience">Work Experience (years)</label>
+          <input type="number" id="Work_Experience" name="Work_Experience" required min="0" max="40">
+        </div>
+        <div>
+          <label for="Undergraduate_Major">Undergraduate Major</label>
+          <input type="text" id="Undergraduate_Major" name="Undergraduate_Major" required>
+        </div>
+        <div>
+          <label for="Current_Job_Title">Current Job Title</label>
+          <input type="text" id="Current_Job_Title" name="Current_Job_Title" required>
+        </div>
+        <div>
+          <label for="GMAT_GRE_Score">GMAT/GRE Score</label>
+          <input type="number" id="GMAT_GRE_Score" name="GMAT_GRE_Score" required min="200" max="805">
+        </div>
+        <div>
+          <label for="Reason_for_MBA">Reason for Pursuing MBA</label>
+          <input type="text" id="Reason_for_MBA" name="Reason_for_MBA" required placeholder="e.g., Career Growth, Industry Switch, Entrepreneurship, etc.">
+        </div>
+      </div>
+      <!-- Advanced Fields (Hidden by default) -->
+      <div class="advanced-fields" style="display: none;">
+        <!-- Basic Fields adapted for Advanced Mode -->
+        <div>
+          <label for="Adv_Age">Age</label>
+          <input type="number" id="Adv_Age" name="Age" required min="18" max="65">
+        </div>
+        <div>
+          <label for="Adv_Years_of_Work_Experience">Work Experience (years)</label>
+          <input type="number" id="Adv_Years_of_Work_Experience" name="Years_of_Work_Experience" required min="0" max="40">
+        </div>
+        <div>
+          <label for="Adv_Undergraduate_Major">Undergraduate Major</label>
+          <input type="text" id="Adv_Undergraduate_Major" name="Undergraduate_Major" required>
+        </div>
+        <div>
+          <label for="Adv_Current_Job_Title">Current Job Title</label>
+          <input type="text" id="Adv_Current_Job_Title" name="Current_Job_Title" required>
+        </div>
+        <div>
+          <label for="Adv_GREGMAT_Score">GMAT/GRE Score</label>
+          <input type="number" id="Adv_GREGMAT_Score" name="GREGMAT_Score" required min="200" max="805">
+        </div>
+        <div>
+          <label for="Adv_Reason_for_MBA">Reason for Pursuing MBA</label>
+          <input type="text" id="Adv_Reason_for_MBA" name="Reason_for_MBA" required placeholder="e.g., Career Growth, Industry Switch, Entrepreneurship, etc.">
+        </div>
+
+        <!-- Existing Advanced-Specific Fields -->
+        <div>
+          <label for="Adv_Gender">Gender:</label>
+          <select id="Adv_Gender" name="Gender" required>
+            <option value="">Select</option>
+            <option>Female</option>
+            <option>Male</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div>
+          <label for="Adv_Undergraduate_GPA">Undergraduate GPA:</label>
+          <input id="Adv_Undergraduate_GPA" name="Undergraduate_GPA" type="number" step="0.01" min="0" max="4" required>
+        </div>
+        <div>
+          <label for="Adv_Annual_Salary_Before_MBA">Annual Salary Before MBA:</label>
+          <input id="Adv_Annual_Salary_Before_MBA" name="Annual_Salary_Before_MBA" type="number" required>
+        </div>
+        <div>
+          <label for="Adv_Has_Management_Experience">Management Experience:</label>
+          <select id="Adv_Has_Management_Experience" name="Has_Management_Experience" required>
+            <option value="">Select</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+        <div>
+          <label for="Adv_Undergrad_University_Ranking">University Ranking:</label>
+          <input id="Adv_Undergrad_University_Ranking" name="Undergrad_University_Ranking" type="number" required>
+        </div>
+        <div>
+          <label for="Adv_Entrepreneurial_Interest">Entrepreneurial Interest (1–10):</label>
+          <div class="slider-group">
+            <input type="range" id="Adv_Entrepreneurial_Interest" name="Entrepreneurial_Interest" min="1" max="10" value="5" oninput="this.nextElementSibling.textContent = this.value; updateSliderFill(this);">
+            <span class="slider-value">5</span>
+          </div>
+        </div>
+        <div>
+          <label for="Adv_Networking_Importance">Networking Importance (1–10):</label>
+          <div class="slider-group">
+            <input type="range" id="Adv_Networking_Importance" name="Networking_Importance" min="1" max="10" value="5" oninput="this.nextElementSibling.textContent = this.value; updateSliderFill(this);">
+            <span class="slider-value">5</span>
+          </div>
+        </div>
+        <div>
+          <label for="Adv_MBA_Funding_Source">MBA Funding Source:</label>
+          <input id="Adv_MBA_Funding_Source" name="MBA_Funding_Source" type="text" required>
+        </div>
+        <div>
+          <label for="Adv_Desired_PostMBA_Role">Desired Post-MBA Role:</label>
+          <input id="Adv_Desired_PostMBA_Role" name="Desired_PostMBA_Role" type="text" required>
+        </div>
+        <div>
+          <label for="Adv_Expected_PostMBA_Salary">Expected Post-MBA Salary:</label>
+          <input id="Adv_Expected_PostMBA_Salary" name="Expected_PostMBA_Salary" type="number" required>
+        </div>
+        <div>
+          <label for="Adv_Location_Preference_PostMBA">Post-MBA Location Preference:</label>
+          <select id="Adv_Location_Preference_PostMBA" name="Location_Preference_PostMBA" required>
+            <option value="">Select</option>
+            <option>Domestic</option>
+            <option>International</option>
+          </select>
+        </div>
+        <div>
+          <label for="Adv_Online_vs_OnCampusMBA">MBA Format:</label>
+          <select id="Adv_Online_vs_OnCampusMBA" name="Online_vs_OnCampusMBA" required>
+            <option value="">Select</option>
+            <option>Online</option>
+            <option>On-campus</option>
+          </select>
+        </div>
+        <div>
+          <label for="Adv_Decided_to_Pursue_MBA">Have you decided to pursue MBA?</label>
+          <select id="Adv_Decided_to_Pursue_MBA" name="Decided_to_Pursue_MBA" required>
+            <option value="">Select</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit">🎓 Compare My Profile</button>
+    </form>
+  </div>
+
+  <div id="result">
+    <!-- Results will appear here -->
+  </div>
+  <script>
+    // Updates slider fill color based on its value
+    function updateSliderFill(slider) {
+      const val = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+      slider.style.setProperty('--val', `${val}%`);
+    }
+  
+    // Select all sliders and bind input event
+    document.querySelectorAll('input[type="range"]').forEach(slider => {
+      updateSliderFill(slider); // Initial update on page load
+      slider.addEventListener('input', () => updateSliderFill(slider));
+    });
+
+    // Removed unused DOMContentLoaded listener that referenced "meter-auto" and "renderBasicFormAndResults"
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggle = document.getElementById('assessment-toggle');
+      const basicLabel = document.getElementById('basic-label');
+      const advancedLabel = document.getElementById('advanced-label');
+      
+      const basicFieldsDiv = document.querySelector('.basic-fields');
+      const advancedFieldsDiv = document.querySelector('.advanced-fields');
+      
+      const assessmentTypeInput = document.getElementById('assessment_type');
+
+      function setFormMode(isAdvanced) {
+        if (isAdvanced) {
+          basicLabel.classList.remove('active');
+          advancedLabel.classList.add('active');
+          if (basicFieldsDiv) basicFieldsDiv.style.display = 'none';
+          if (advancedFieldsDiv) advancedFieldsDiv.style.display = 'grid';
+          assessmentTypeInput.value = 'advanced';
+        } else {
+          basicLabel.classList.add('active');
+          advancedLabel.classList.remove('active');
+          if (basicFieldsDiv) basicFieldsDiv.style.display = 'contents'; // Use 'contents' to respect parent grid
+          if (advancedFieldsDiv) advancedFieldsDiv.style.display = 'none';
+          assessmentTypeInput.value = 'basic';
+        }
+      }
+
+      // Set initial mode based on checkbox state (default is basic)
+      setFormMode(toggle.checked);
+
+      toggle.addEventListener('change', function() {
+        setFormMode(this.checked);
+      });
+      // 3) — everything below is the **Advanced mode** result-renderer —
+      /**
+     * Creates a horizontal bar of N segments, coloring
+     * them up to `probability` (0…1).
+     */
+    function initSegmentedMeter(container, probability, segments = 20) {
+      const segs = container.querySelector('.segments');
+      segs.innerHTML = '';
+      for (let i = 0; i < segments; i++) {
+        const div = document.createElement('div');
+        div.className = 'segment';
+        segs.appendChild(div);
+      }
+      const fillCount = Math.round(probability * segments);
+      let cls = probability <= 0.3
+        ? 'filled-low'
+        : probability <= 0.7
+          ? 'filled-medium'
+          : 'filled-high';
+      segs.querySelectorAll('.segment').forEach((d, i) => {
+        if (i < fillCount) d.classList.add(cls);
+      });
+    }
+
+    /**
+     * Renders the top “card” with:
+     * - circular match score
+     * - scholarship segmented meter
+     * - risk bars
+     * - salary delta
+     */
+    function generateCandidateCard(result, baseSalary) {
+      const m = result.match_score || 0;
+      const p = (result.scholarship_probability || 0) / 100;
+      const fit = result.fit_type || 'Unknown';
+      const predSal = result.predicted_salary || 0;
+      const delta = predSal - baseSalary;
+      const up = delta >= 0;
+      const deltaText = up
+        ? `⬆️ ${delta.toLocaleString()}$`
+        : `⬇️ ${Math.abs(delta).toLocaleString()}$`;
+      const ringClass = m >= 80 ? 'green' : m >= 60 ? 'orange' : 'red';
+
+      return `
+        <div class="candidate-card new-layout">
+          <div class="card-header">
+            <!-- MATCH SCORE -->
+            <div class="match-column">
+              <div class="circular-chart-container"> {/* New wrapper */}
+                <svg viewBox="0 0 36 36" class="circular-chart ${ringClass}">
+                  <path class="circle-bg"
+                        d="M18 2.0845a15.9155 15.9155 0 0 1 0 31.831"/>
+                  <path class="circle"
+                        stroke-dasharray="100"
+                        stroke-dashoffset="${100-m}"
+                        d="M18 2.0845a15.9155 15.9155 0 0 1 0 31.831"/>
+                </svg>
+                <div class="percentage-overlay">${m}%</div>
+              </div>
+              <div class="match-label">Matching score</div>
+            </div>
+
+            <!-- SCHOLARSHIP & RISK -->
+            <div class="info-column">
+              <div class="fit-type">#${fit}</div>
+              <div class="segmented-meter-container" id="meter-${result.id||'auto'}">
+                <div class="label">Scholarship Probability</div>
+                <div class="frame-box"><div class="segments"></div></div>
+                <div class="percent-text">${(p*100).toFixed(0)}%</div>
+              </div>
+              <div class="risk-section">
+                <h4>Risk Factors</h4>
+                ${Object.entries(result.risk_factors||{}).map(([lbl, sc_value]) => {
+                  const score = Number(sc_value) || 0;
+                  let riskLevelClass = '';
+                  if (score >= 8) { // High risk: 8, 9, 10
+                    riskLevelClass = 'risk-level-high';
+                  } else if (score >= 4) { // Medium risk: 4, 5, 6, 7
+                    riskLevelClass = 'risk-level-medium';
+                  } else { // Low risk: 0, 1, 2, 3
+                    riskLevelClass = 'risk-level-low';
+                  }
+                  return `
+                  <div class="risk-line">
+                    <div class="label">${lbl}</div>
+                    <div class="bar ${riskLevelClass}" style="--value: ${score * 10}%"></div>
+                    <div class="score">${score}/10</div>
+                  </div>
+                `;}).join('')}
+              </div>
+            </div>
+
+            <!-- SALARY -->
+            <div class="salary-column">
+              <div class="salary-title">Post-MBA salary prediction</div>
+              <div class="salary-value">$${predSal.toLocaleString()}</div>
+              <div class="delta-text ${up?'up':'down'}">${deltaText}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+  // 4) Wire up the form
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('mbaFormTab6');
+      form.addEventListener('submit', async e => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(form));
+        try {
+          const resp = await fetch(form.action, {
+            method: form.method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          const result = await resp.json();
+          if (!resp.ok) throw new Error(result.message||resp.statusText);
+
+          // build and show
+          const baseSal = parseFloat(data.Annual_Salary_Before_MBA||0);
+          const cardHtml = generateCandidateCard(result, baseSal);
+
+          let html = `
+            <h2>Result Summary</h2>
+            <p><strong>📚 Recommended Field:</strong> ${result.recommended_mba_field}</p>
+            <p><strong>🧾 Summary:</strong> ${result.summary}</p>
+            <h3>🎓 Recommended MBA Programs</h3>
+            ${ result.recommended_mba_programs.length
+                ? `<ul>${result.recommended_mba_programs.map(p=>`
+                    <li><strong>${p.school}</strong> — ${p.program_type} (${p.location})<br>
+                    <em>${p.fit_reason}</em></li>
+                  `).join('')}</ul>`
+                : `<p><em>No personalized matches found.</em></p>`
+            }
+            <h3>🚀 Career Path</h3>
+            <ul>${result.career_path.map(r=>`<li>${r}</li>`).join('')}</ul>
+            <h3>🧠 Skills to Build</h3>
+            <ul>${result.recommended_skills.map(s=>`<li>${s}</li>`).join('')}</ul>
+            <h3>🌍 Best Locations</h3>
+            <ul>${(result.best_locations||[]).map(loc=>`
+              <li>${loc.city}: ${loc.reason}</li>
+            `).join('')}</ul>
+            <div id="map" style="height:400px;margin-top:20px"></div>
+            <p><strong>💸 ROI (5 years):</strong> $${result.roi}</p>
+          `;
+
+          const resDiv = document.getElementById('result');
+          resDiv.innerHTML = cardHtml + html;
+          resDiv.style.display = 'block';
+
+          // init segmented meters
+          document.querySelectorAll('.segmented-meter-container').forEach(c => {
+            const prob = (result.scholarship_probability||0)/100;
+            initSegmentedMeter(c, prob);
+          });
+
+          // initialize map
+          if (result.best_locations?.length) {
+            loadInteractiveMap(result.best_locations);
+            setTimeout(()=>{
+              document.getElementById('map')?.classList.add('map-ready');
+            }, 100);
+          }
+        }
+        catch(err) {
+          const resDiv = document.getElementById('result');
+          resDiv.innerHTML = `
+            <div style="color:red;padding:20px;background:#fff;border-radius:8px">
+              <h3>Error</h3><p>${err.message}</p>
+            </div>`;
+          resDiv.style.display = 'block';
+          console.error(err);
+        }
+      });
+    });
+  </script>
+</body>
+</body>
+</html>

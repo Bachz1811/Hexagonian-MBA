@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scroll-Driven Donut Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='tab3/style3.css') }}">
+    <script src="{{ url_for('static', filename='tab3/script3333.js') }}" defer></script>
+
+</head>
+<body>
+        <h1 class="hero-title">Entrepreneurial & Networking Insights</h1>
+    <div id="chart-container">
+        <div class="legend" id="ent-legend"></div>
+        <canvas id="donutChart"></canvas>
+        <div class="legend" id="net-legend"></div>
+    </div>
+   <div id="scroll-boxes">
+<div class="scroll-box left">
+  Although 
+  <span style="display: inline-block; width: 20px; height: 20px; background-color: #8e5d2a; border-radius: 50%; vertical-align: middle;"></span> 
+  had relatively low entrepreneurial intent, 
+  <strong>they still anticipated a $131K post‑MBA salary, up from $74.9K</strong>, reflecting ambitions for upward mobility rather than startup ventures.
+</div>
+
+
+<div class="scroll-box left">
+  With the <strong>highest GRE scores (~528)</strong> and solid academic backgrounds, 
+  <span style="display: inline-block; width: 20px; height: 20px; background-color: #d6ac4e; border-radius: 50%; vertical-align: middle;"></span> 
+  seem to approach the MBA as a structured investment in career stability.
+</div>
+
+<div class="scroll-box left">
+  Balancing ambition and preparation, 
+  <span style="display: inline-block; width: 20px; height: 20px; background-color: #c66e21; border-radius: 50%; vertical-align: middle;"></span> 
+  <strong>averaged 4.6 years of experience, a GRE of 528, and aimed to grow their income from $75.3K to $131.2K</strong> after graduation.
+</div>
+
+<div class="scroll-box left">
+  Despite having <strong>the lowest GRE scores (517)</strong>, 
+  <span style="display: inline-block; width: 20px; height: 20px; background-color: #ed7e26; border-radius: 50%; vertical-align: middle;"></span> 
+  still projected strong outcomes, expecting to nearly double their income post-MBA.
+</div>
+
+<div class="scroll-box right">
+  <span style="display: inline-block; width: 20px; height: 20px; background-color: #688d5c; border-radius: 50%; vertical-align: middle;"></span> 
+  placed little emphasis on relationships, but still held 
+  <strong>GRE scores around 525 and expected to boost their income to $130.5K</strong>, relying more on credentials than connections.
+</div>
+
+
+<div class="scroll-box right">
+  Sitting at the tipping point of networking awareness, 
+  <span style="display: inline-block; width: 20px; height: 20px; background-color: #1d4f43; border-radius: 50%; vertical-align: middle;"></span> 
+  maintained the <strong>highest GRE score (526.7)</strong> and sought to elevate their careers beyond their 
+  <strong>$75.5K pre‑MBA baseline</strong>.
+</div>
+
+
+<div class="scroll-box right">
+  With <strong>a modest GRE of 523 and average work experience</strong>, 
+  <span style="display: inline-block; width: 20px; height: 20px; background-color: #6d7247; border-radius: 50%; vertical-align: middle;"></span> 
+  likely views the MBA as a gateway into new industries through access, not academics.
+</div>
+
+
+<div class="scroll-box right">
+  <span style="display: inline-block; width: 20px; height: 20px; background-color: #aa3b19; border-radius: 50%; vertical-align: middle;"></span> 
+  valued networking the most and projected <strong>the highest expected salary (~$130.8K)</strong>, showing a clear belief in the power of connections over test performance.
+</div>
+
+</div>
+</body>
+</html>

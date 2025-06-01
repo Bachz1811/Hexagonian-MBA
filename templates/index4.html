@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Top MBA Reasons</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='tab4/style4.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script id="reason-data" type="application/json">
+    {{ reason_data | tojson }}
+  </script>
+  <script id="gender-percentages" type="application/json">
+    {{ gender_percentages | tojson }}
+  </script>
+  <script>
+    const reasonData = JSON.parse(document.getElementById('reason-data').textContent);
+    const genderPercentages = JSON.parse(document.getElementById('gender-percentages').textContent);
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="top-reasons">
+      <h4>TOP 4 REASONS FOR MBA ACROSS GENDER</h4>
+      <div class="sort-buttons">
+        <button class="sort-btn active" data-sort="Male">Male</button>
+        <button class="sort-btn" data-sort="Female">Female</button>
+        <button class="sort-btn" data-sort="Other">Other</button>
+        <button class="sort-btn" data-sort="All">All</button>
+      </div>
+
+      <div id="topReasonsScroll" class="scroll-container"></div>
+
+      <div id="allChartsSection" class="scroll-container hidden"></div>
+
+    </div>
+
+    <div id="compareModeWrapper" class="compare-mode">
+      <h3 class="compare-title">Compare Two Reasons</h3>
+      <div class="compare-selectors">
+        <select id="reason1Select">
+          <option value="">-- Select Reason 1 --</option>
+        </select>
+        <select id="reason2Select">
+          <option value="">-- Select Reason 2 --</option>
+        </select>
+        <button id="compareBtn">Compare</button>
+      </div>
+
+      <div id="compareResult" class="compare-cards hidden"></div>
+
+      <div id="compareInsight" class="compare-insight hidden">
+        <div class="insight-box"></div>
+        <details class="insight-details">
+          <summary>See all differences</summary>
+          <ul class="insight-list"></ul>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='tab4/script4.js') }}"></script>
+</body>
+</html>
