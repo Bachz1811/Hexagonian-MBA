@@ -142,6 +142,10 @@ def query_gemini(user_data):
         user_data['MBA_Funding_Source'],
         user_data['Annual_Salary_Before_MBA']
     )
+    #  Truncate long text fields to avoid out-of-memory crash
+user_data['Reason_for_MBA'] = user_data.get('Reason_for_MBA', '')[:400]
+user_data['Current_Job_Title'] = user_data.get('Current_Job_Title', '')[:100]
+user_data['Location_Preference_PostMBA'] = user_data.get('Location_Preference_PostMBA', '')[:100]
 
     prompt = f"""
 You are an expert MBA advisor AI with deep knowledge of admissions, career outcomes, salaries, and top global business schools.
@@ -557,7 +561,7 @@ If you do not have a value, use 0, an empty array/object, or 'Unknown' as approp
 Return ONLY valid JSON, no extra text.
 """
 
-    
+    print("Prompt length:", len(prompt))
     response = genai_model.generate_content(prompt)
     gemini_result = extract_json_from_response(response.text)
 
