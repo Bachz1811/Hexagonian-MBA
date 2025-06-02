@@ -7,7 +7,7 @@ import google.generativeai as genai
 # Load API key from .env
 load_dotenv()
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-
+genai_model = genai.GenerativeModel('models/gemini-1.5-flash')
 # 🔧 Estimate budget from funding source and salary
 def estimate_budget(source, salary):
     try:
@@ -557,8 +557,8 @@ If you do not have a value, use 0, an empty array/object, or 'Unknown' as approp
 Return ONLY valid JSON, no extra text.
 """
 
-    model = genai.GenerativeModel('models/gemini-1.5-flash')
-    response = model.generate_content(prompt)
+    
+    response = genai_model.generate_content(prompt)
     gemini_result = extract_json_from_response(response.text)
 
     print("Gemini result:", gemini_result)
