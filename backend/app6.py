@@ -17,7 +17,16 @@ tab6_bp = Blueprint('tab6', __name__) # Removed template_folder and static_folde
 @tab6_bp.route('/submit_mba_profile_tab6', methods=['POST']) # Changed route to be more specific
 def submit_mba_profile_tab6(): # Changed function name
     try:
-        data = request.form.to_dict()
+         # Log content type and raw body for debugging
+        current_app.logger.info(f"Request content type: {request.content_type}")
+        current_app.logger.info(f"Raw body: {request.data}")
+
+        # Accept both JSON and form-data
+        if request.is_json:
+            data = request.get_json()
+        else:
+            data = request.form.to_dict()
+
         assessment_type = data.pop('assessment_type', 'advanced')
         current_app.logger.info(f"Tab6: Received data for {assessment_type} assessment: {data}")
         
