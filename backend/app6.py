@@ -17,16 +17,7 @@ tab6_bp = Blueprint('tab6', __name__) # Removed template_folder and static_folde
 @tab6_bp.route('/submit_mba_profile_tab6', methods=['POST']) # Changed route to be more specific
 def submit_mba_profile_tab6(): # Changed function name
     try:
-         # Log content type and raw body for debugging
-        current_app.logger.info(f"Request content type: {request.content_type}")
-        current_app.logger.info(f"Raw body: {request.data}")
-
-        # Accept both JSON and form-data
-        if request.is_json:
-            data = request.get_json()
-        else:
-            data = request.form.to_dict()
-
+        data = request.form.to_dict()
         assessment_type = data.pop('assessment_type', 'advanced')
         current_app.logger.info(f"Tab6: Received data for {assessment_type} assessment: {data}")
         
@@ -93,7 +84,7 @@ def submit_mba_profile_tab6(): # Changed function name
             project_root = os.path.abspath(os.path.join(current_app.root_path, '..'))
             csv_data_dir = os.path.join(project_root, 'data')
             os.makedirs(csv_data_dir, exist_ok=True) # Ensure this directory exists
-            csv_file_path = os.path.join(csv_data_dir, 'MBA_data.csv')
+            csv_file_path = os.path.join(csv_data_dir, 'D:/HAZEL/University/Studying materials\Phase 4/Business IT 2/tab/static/tab6/data/MBA_dataset.csv')
             current_app.logger.info(f"Tab6: Saving CSV to {csv_file_path}")
 
 
@@ -156,14 +147,7 @@ def submit_mba_profile_tab6(): # Changed function name
                         values = [s.get("value", 0) for s in strengths_data]
                     elif isinstance(strengths_data[0], str): # If it's a list of strings
                         labels = strengths_data
-                        values = program.get("strengths_values") or ([70] * len(labels)) # Default values
-                
-                default_axes = ["Leadership", "Global", "Technology", "Analytics", "Strategy", "Entrepreneurship", "Finance", "Consulting"]
-                current_label_idx = 0
-                while len(labels) < 5:
-                    labels.append(default_axes[current_label_idx % len(default_axes)])
-                    values.append(60) 
-                    current_label_idx +=1
+                        values = program.get("strengths_values") or ([55] * len(labels)) # Default values
                 
                 # Reconstruct based on original format if necessary
                 if strengths_data and isinstance(strengths_data, list) and strengths_data and isinstance(strengths_data[0], dict):
