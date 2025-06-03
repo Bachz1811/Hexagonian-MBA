@@ -84,7 +84,7 @@ def submit_mba_profile_tab6(): # Changed function name
             project_root = os.path.abspath(os.path.join(current_app.root_path, '..'))
             csv_data_dir = os.path.join(project_root, 'data')
             os.makedirs(csv_data_dir, exist_ok=True) # Ensure this directory exists
-            csv_file_path = os.path.join(csv_data_dir, 'D:/HAZEL/University/Studying materials\Phase 4/Business IT 2/tab/static/tab6/data/MBA_dataset.csv')
+            csv_file_path = csv_file_path = os.path.join(csv_data_dir, 'tab/static/tab6/data/MBA_dataset.csv')
             current_app.logger.info(f"Tab6: Saving CSV to {csv_file_path}")
 
 
