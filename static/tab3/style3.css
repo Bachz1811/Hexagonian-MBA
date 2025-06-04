@@ -7,8 +7,8 @@
   letter-spacing: 0.6px;
   text-align: center !important;
   margin-top: 30px;
-  color: #3e2a1c;
-  text-shadow: 1px 1px 0 #f4ebdb, 2px 2px 3px rgba(0, 0, 0, 0.07);
+  color: #ffffff;
+  text-shadow: 1px 1px 0 #5A1F0F, 2px 2px 3px rgba(0, 0, 0, 0.07);
 }
 
         html, body {
@@ -25,21 +25,35 @@
         position: relative; 
         }
 
-        #chart-container {
-            position: relative;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            margin: 20px auto 50px auto; 
-            gap: 1rem;
-            max-width: 90vw;
-        }
+ #chart-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.1rem;
+  margin-top: 30px;
+  margin-left: 50px;
+  
+}
+#chart-container {
+  display: flex;
+  align-items: center;
+  max-width: 500px;
+  padding: 0;
+}
 
-        #tab3-scroll-section {
-            padding-top: 5vh; 
-            position: relative; 
-            transform: translateZ(0);
+#tab3-scroll-section {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  transform: translateZ(0);
+  
+  min-height: 100vh;
+  overflow: visible;
+}
+
+#tab3-scroll-section .hero-title {
+  margin-top: 0;
+  padding-top: 0;
 }
 
         #ent-legend {
@@ -48,7 +62,8 @@
 
 }
         #net-legend {
-    margin-left: 20px;
+    
+    transform: translateX(-50px);
     color: #1d4f43
         }
         
@@ -96,7 +111,6 @@
   color: #222;
   border: 1px solid #bbb;
   border-radius: 10px;
-  position: fixed;
   opacity: 0;
   z-index: 20;
   padding: 16px 20px;
@@ -109,18 +123,20 @@
   pointer-events: none; /* Prevent hover glitches */
   position: absolute;
   transform: translateY(100vh);
+  will-change: transform, opacity;
+  
 }
 
 .scroll-box.left {
-  left: 2%;
-  transform: translateY(100vh);
+  left: -350px;
+  
   background-color: rgba(253, 207, 43, 0.15); /* #fdcf2b */
 }
 
 .scroll-box.right {
-  right: 2%;
-  transform: translateY(100vh);
+  right: -350px;
   background-color: rgba(193, 85, 26, 0.15); /* #c1551a */
+ 
 }
 .scroll-box.active {
             opacity: 1;
