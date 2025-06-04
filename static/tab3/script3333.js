@@ -1,6 +1,5 @@
 console.log("Executing script3333.js - Timestamp:", new Date().toISOString());
-/*  <-- Start of comment block
-Chart.register({
+const customLabelsWithArrows = {
       id: 'customLabelsWithArrows',
       afterDraw(chart) {
         const { ctx } = chart;
@@ -13,6 +12,7 @@ Chart.register({
         const entTotal = entData.reduce((a, b) => a + b, 0);
         const netTotal = netData.reduce((a, b) => a + b, 0);
 
+        
         function drawArrowWithText(x1, y1, x2, y2, text, inside = true, color = '#000') {
           const headlen = 10;
           const angle = Math.atan2(y2 - y1, x2 - x1);
@@ -72,8 +72,8 @@ toY = segment.y + (segment.innerRadius + 25) * Math.sin(angle);
           drawLabels(meta2, netData, netTotal, 25, false, netColors);
         }
       }
-    });
-*/ // <-- End of comment block
+    };
+
 
         let chart;
         let currentValue = 0;
@@ -186,11 +186,12 @@ toY = segment.y + (segment.innerRadius + 25) * Math.sin(angle);
                 title: {
                     display: true,
                 }
-            }
+            }, 
         },
         
-        /*  <-- Start of comment block
-        plugins: [   
+       
+        plugins: [  
+            customLabelsWithArrows, 
                 {
     id: 'gridLines',
     beforeDraw(chart) {
@@ -286,7 +287,7 @@ const labelOffset = 15
     }
 }
         ]
-*/ // <-- End of comment block
+
     });
     console.log("Chart object created:", chart); // Check if chart object is made
 }
@@ -413,16 +414,17 @@ function updateSingleBoxByThreshold(value) {
     const rightBoxes = document.querySelectorAll('#scroll-boxes .scroll-box.right');
     const thresholds = [0, 17.23, 45.05, 73.4, 100, 117, 144.4, 172, 200.01]; // Added 0.01 to last for < check
 
-    const containerH = scrollBoxesContainer.offsetHeight; // Or a fixed travel distance like window.innerHeight
-    const startY = containerH; // Start just below the container
-    const endY = 50; // End 50px from the top of the container
+    const tab3 = document.getElementById('tab3-scroll-section');
+    const containerH = tab3.offsetHeight;
+    const startY = 300 ;// Start at the corner
+    const endY = -300; 
 
 
     leftBoxes.forEach((box, i) => {
         const rangeStart = thresholds[i];
         const rangeEnd = thresholds[i + 1];
 
-        // console.log(`Left Box ${i}: value=${value.toFixed(1)}, rs=${rangeStart}, re=${rangeEnd}, op=${box.style.opacity}`);
+         console.log(`Left Box ${i}: value=${value.toFixed(1)}, rs=${rangeStart}, re=${rangeEnd}, op=${box.style.opacity}`);
 
         if (value >= rangeStart && value < rangeEnd) {
         const segmentDuration = rangeEnd - rangeStart;
@@ -437,8 +439,8 @@ function updateSingleBoxByThreshold(value) {
         if (value < rangeStart) {
             box.style.transform = `translateY(${startY}px)`; // Reset to start pos
             box.style.opacity = 0;
-        } else { // value >= rangeEnd
-            // box.style.transform = `translateY(${endY - 50}px)`; // Move past end pos
+        } else { value >= rangeEnd
+             box.style.transform = `translateY(${endY - 50}px)`; // Move past end pos
             box.style.opacity = 0; // Disappear after passing
         }
     }
@@ -448,7 +450,7 @@ function updateSingleBoxByThreshold(value) {
         const rangeStart = thresholds[i + 4];
         const rangeEnd = thresholds[i + 5];
 
-        // console.log(`Right Box ${i}: value=${value.toFixed(1)}, rs=${rangeStart}, re=${rangeEnd}, op=${box.style.opacity}`);
+         console.log(`Right Box ${i}: value=${value.toFixed(1)}, rs=${rangeStart}, re=${rangeEnd}, op=${box.style.opacity}`);
 
         if (value >= rangeStart && value < rangeEnd) {
         const segmentDuration = rangeEnd - rangeStart;
@@ -463,8 +465,8 @@ function updateSingleBoxByThreshold(value) {
         if (value < rangeStart) {
             box.style.transform = `translateY(${startY}px)`; // Reset to start pos
             box.style.opacity = 0;
-        } else { // value >= rangeEnd
-            // box.style.transform = `translateY(${endY - 50}px)`; // Move past end pos
+        } else {  value >= rangeEnd
+             box.style.transform = `translateY(${endY - 50}px)`; // Move past end pos
             box.style.opacity = 0; // Disappear after passing
         }
     }
@@ -483,13 +485,13 @@ function updateSingleBoxByThreshold(value) {
     // to allow for a decent scroll duration. You might need to set min-height on it via CSS.
     // For example, if you want the animation to take 3 screen heights to complete:
     // document.getElementById('chart-container').style.minHeight = '300vh'; // Or a wrapper for tab3
-
+    
     ScrollTrigger.create({
         trigger: "#tab3-scroll-section", // Or a wrapper specific to Tab 3 content
         pin: true,
         start: "top top", // When the top of #chart-container hits the top of the viewport
-        end: () => "+=" + (window.innerHeight * 3),
-        scrub: 1, // Smooth scrubbing (1 second to catch up)
+        end: () => "+=" + (window.innerHeight * 10),
+        scrub: 0.3, // Smooth scrubbing (1 second to catch up)
         markers: false, // KEEP THIS FOR DEBUGGING for now
         anticipatePin: 1, // Helps prevent jitter with pinning\
         pinSpacing: true, 
@@ -500,12 +502,12 @@ function updateSingleBoxByThreshold(value) {
         },
         onEnter: () => {
             console.log("Tab3: Entered scroll trigger zone");
-            smoothUpdate(0);
+            smoothUpdate(0.3);
             updateSingleBoxByThreshold(0);
         },
         onLeaveBack: () => {
             console.log("Tab3: Left scroll trigger zone (scrolling up)");
-            smoothUpdate(0);
+            smoothUpdate(0.3);
             updateSingleBoxByThreshold(0);
         }
     });
