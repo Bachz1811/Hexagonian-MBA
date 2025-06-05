@@ -1,71 +1,48 @@
 // static/tab2/script2.js
 let data = {};
-let salaryComparisonChart; // <--- RENAMED from 'chart'
-let currentFlippedLevel = null; // Currently flipped level
+let salaryComparisonChart;
+let currentFlippedLevel = null;
 
 // Load data and initialize
 fetch(typeof DATA_JSON_URL !== "undefined" ? DATA_JSON_URL : "tab2/data.json")
   .then(res => {
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status} for ${res.url}`);
-    }
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status} for ${res.url}`);
     return res.json();
   })
   .then(json => {
     data = json;
-    initializeSalaryChart(); // <--- Renamed function for clarity
+    initializeSalaryChart();
     attachStepListeners();
   })
   .catch(err => console.error("Cannot load data.json for Tab 2:", err));
 
-function initializeSalaryChart() { // <--- Renamed function
-  // Use a fixed order for job levels
-  const levelNames = [
-    "Entry Level",
-    "Junior Level",
-    "Experienced Level",
-    "Senior Level"
-  ];
+function initializeSalaryChart() {
+  const levelNames = ["Entry Level", "Junior Level", "Experienced Level", "Senior Level"];
   const beforeData = levelNames.map(lvl => data[lvl]?.average_salary_before ?? 0);
   const afterData = levelNames.map(lvl => data[lvl]?.average_salary_after ?? 0);
 
-  // Color & opacity settings
   const lightB = 'rgba(170,59,25,0.7)';
   const lightA = 'rgba(29,79,67,0.7)';
-  const dimB = 'rgba(170,59,25,0.3)'; // Not used in initial, but kept for consistency
-  const dimA = 'rgba(29,79,67,0.3)'; // Not used in initial, but kept for consistency
   const darkB = '#aa3b19';
   const darkA = '#1d4f43';
 
-  // Get the specific chart container and canvas for Tab 2
-  // Assuming index2.html has <div class="col chart-col"><div id="salary-chart-container-tab2"><canvas id="salaryChartCanvasTab2"></canvas></div></div>
-  // If not, you need to make sure the IDs are unique or use querySelector specific to Tab 2's structure.
-  // For now, I'll assume your existing IDs are unique enough within index2.html's scope.
-  // The original code used document.getElementById("chart-container") which could conflict if index3.html also uses that ID.
-  // It's safer to use IDs specific to this tab, or query within a Tab 2 specific parent.
-  // Let's stick to your original IDs for now, but be aware of potential conflicts if other tabs use the same.
-  const chartDisplayContainer = document.getElementById("chart-container"); // This ID might be generic
-  const canvas = document.getElementById("salaryChart"); // This ID is for the salary chart
+  const chartDisplayContainer = document.getElementById("chart-container");
+  const canvas = document.getElementById("salaryChart");
 
-  if (!canvas) { // Only need to check canvas as chart is drawn on it.
-    console.error("Tab 2: Canvas element with ID 'salaryChart' not found! Chart will NOT render.");
+  if (!canvas) {
+    console.error("Tab 2: Canvas element with ID 'salaryChart' not found!");
     return;
   }
-  // It's good practice to check the container too, but canvas is primary.
   if (!chartDisplayContainer) {
-      console.warn("Tab 2: Element with ID 'chart-container' not found. Chart might render but layout could be affected.");
+    console.warn("Tab 2: Element with ID 'chart-container' not found.");
   }
-
 
   try {
     const ctx = canvas.getContext("2d");
 
-    // Destroy existing chart instance if it exists
-    if (salaryComparisonChart) {
-      salaryComparisonChart.destroy();
-    }
+    if (salaryComparisonChart) salaryComparisonChart.destroy();
 
-    salaryComparisonChart = new Chart(ctx, { // <--- USE RENAMED VARIABLE
+    salaryComparisonChart = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: levelNames,
@@ -74,14 +51,14 @@ function initializeSalaryChart() { // <--- Renamed function
             label: 'Salary Before MBA',
             data: beforeData,
             backgroundColor: beforeData.map(() => lightB),
-            borderColor: beforeData.map(() => lightB), // Or use darkB for border
+            borderColor: beforeData.map(() => lightB),
             borderWidth: 1
           },
           {
             label: 'Expected Salary After MBA',
             data: afterData,
             backgroundColor: afterData.map(() => lightA),
-            borderColor: afterData.map(() => lightA), // Or use darkA for border
+            borderColor: afterData.map(() => lightA),
             borderWidth: 1
           }
         ]
@@ -103,7 +80,19 @@ function initializeSalaryChart() { // <--- Renamed function
               font: { family: 'Merriweather', size: 11 },
               boxWidth: 12,
               usePointStyle: true,
-              // generateLabels function seems fine, refers to chartInstance locally
+              generateLabels: chart => {
+                const idx = chart.data.labels.indexOf(currentFlippedLevel);
+                return chart.data.datasets.map((ds, i) => ({
+                  text: ds.label,
+                  fillStyle: i === 0
+                    ? (idx !== -1 ? darkB : lightB)
+                    : (idx !== -1 ? darkA : lightA),
+                  strokeStyle: 'transparent',
+                  lineWidth: 0,
+                  hidden: false,
+                  index: i
+                }));
+              }
             }
           }
         },
@@ -135,7 +124,7 @@ function initializeSalaryChart() { // <--- Renamed function
       }
     });
 
-    if(chartDisplayContainer) chartDisplayContainer.classList.add("show"); // Check if container exists
+    if (chartDisplayContainer) chartDisplayContainer.classList.add("show");
     console.log("Tab 2: Salary chart rendered successfully!");
   } catch (e) {
     console.error("Tab 2: Salary chart failed to render!", e);
@@ -143,8 +132,7 @@ function initializeSalaryChart() { // <--- Renamed function
 }
 
 function attachStepListeners() {
-  const stepEls = document.querySelectorAll('.step'); // These are specific to Tab 2's HTML structure
-  // Color constants are fine as they are local to this function or can be accessed from global if defined there
+  const stepEls = document.querySelectorAll('.step');
   const lightB = 'rgba(170,59,25,0.7)';
   const lightA = 'rgba(29,79,67,0.7)';
   const dimB = 'rgba(170,59,25,0.3)';
@@ -154,20 +142,21 @@ function attachStepListeners() {
 
   stepEls.forEach(el => {
     el.addEventListener('click', () => {
-      if (!salaryComparisonChart || !salaryComparisonChart.data) { // <--- Check if chart exists
-          console.error("Tab 2: salaryComparisonChart not initialized before click.");
-          return;
+      if (!salaryComparisonChart || !salaryComparisonChart.data) {
+        console.error("Tab 2: salaryComparisonChart not initialized before click.");
+        return;
       }
+
       const level = el.getAttribute('data-step');
-      const card = document.querySelector('.card2'); // Assumes .card2 is unique to Tab 2 or within its scope
-      const back = document.querySelector('.card-back'); // Same assumption
+      const card = document.querySelector('.card2');
+      const back = document.querySelector('.card-back');
 
       if (!card || !back) {
-          console.error("Tab 2: Card elements not found for interaction.");
-          return;
+        console.error("Tab 2: Card elements not found for interaction.");
+        return;
       }
 
-      // Reset if clicking the same level
+      // Reset
       if (currentFlippedLevel === level) {
         currentFlippedLevel = null;
         el.classList.remove('active');
@@ -185,9 +174,9 @@ function attachStepListeners() {
       currentFlippedLevel = level;
       const idx = salaryComparisonChart.data.labels.indexOf(level);
 
-      if (idx === -1) { // Level not found in chart labels
-          console.warn(`Tab 2: Level "${level}" not found in chart labels.`);
-          return;
+      if (idx === -1) {
+        console.warn(`Tab 2: Level "${level}" not found in chart labels.`);
+        return;
       }
 
       salaryComparisonChart.data.datasets[0].backgroundColor = salaryComparisonChart.data.datasets[0].data.map((_, i) => i === idx ? darkB : dimB);
@@ -196,10 +185,10 @@ function attachStepListeners() {
 
       const info = data[level];
       if (!info) {
-          console.warn(`Tab 2: Data for level "${level}" not found.`);
-          back.innerHTML = `<div class="back-title"><strong>${level} Details</strong></div><div class="back-content">Data not available.</div>`;
-          card.classList.add('flipped');
-          return;
+        console.warn(`Tab 2: Data for level "${level}" not found.`);
+        back.innerHTML = `<div class="back-title"><strong>${level} Details</strong></div><div class="back-content">Data not available.</div>`;
+        card.classList.add('flipped');
+        return;
       }
 
       back.innerHTML = `
