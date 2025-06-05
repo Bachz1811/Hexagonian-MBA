@@ -57,13 +57,13 @@
 }
 
         #ent-legend {
-    margin-right: -25px;
+    transform: translateX(90px);
     color: #c1551a;
 
 }
         #net-legend {
     
-    transform: translateX(-50px);
+    transform: translateX(-90px);
     color: #1d4f43
         }
         
