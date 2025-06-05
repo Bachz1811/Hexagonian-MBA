@@ -274,7 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Reset sliders when major changes
     window.resetRangeSliders = function() {
       sliderMin.value = minYear;
-      sliderMax.value = maxYear;
+      sliderMax.value = minYear;
       updateLabel();
     };
 
